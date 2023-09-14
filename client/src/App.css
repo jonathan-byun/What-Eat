@@ -1,45 +1,79 @@
+* {
+  margin: 0;
+}
+
+label {
+  margin: 10px 0
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  height: 100vh;
+}
+
+.background-orange {
+  background-color: rgb(255, 196, 0);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.form-container {
+  padding: 20px 30px;
+  background-color: white;
+  flex-direction: column;
+  border-width: 1px;
+  border-color: grey;
+  border-style: solid;
+  max-width: 600px;
+  margin: 20% auto;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.login-modal {
+  position: fixed;
+  z-index: 1;
+  overflow: auto;
+}
+
+.Oswald {
+  font-family: Oswald, sans-serif;
+}
+
+.text-align-center {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.title {
+  font-size: 10vh;
+  color: rgb(255, 0, 0);
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.title-container {
+  justify-content: center;
+  text-align: center;
+  padding-top: 15%;
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.width-50 {
+  width: 50%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.width-100 {
+  width: 100%;
 }
