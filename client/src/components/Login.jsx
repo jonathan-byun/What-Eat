@@ -1,27 +1,31 @@
 import { useState } from "react"
 
 export default function LoginPopup() {
-  const [registering,setRegistering] = useState(false)
+  const [registering,setRegistering] = useState(false);
 
-  function handleLogin(e) {
-    e.preventDefault()
+  function handleSubmit(e) {
+    e.preventdefault();
+
   }
 
   return(
-  <div className='login-modal width-100 height-100'>
-    <form className='form-container justify-center display-flex'>
-      <div className="display-flex justify-center">
-        <img className='login-img width-50'src="../public/login-image.png" alt="Login Image" />
+  <div className='modal width-100 height-100'>
+    <form className="modal-content">
+      <div className="login-imgcontainer">
+        <img src="../public/login-image.png" alt="Login Image" className="login-img"></img>
       </div>
-      <label htmlFor="loginId">
-        <b>Username/email</b>
-      </label>
-      <input type='text' name='loginId' id="loginId" placeholder="Enter Username/Email"></input>
-      <label className="display-flex justify-between" htmlFor="password">
-        <b>Password</b>
-      </label>
-      <input type='password' name='password' id="password" placeholder="Enter Password"></input>
-      <button type="submit" onClick={handleLogin}>Login</button>
+      <div className="container">
+        <label htmlFor="loginId border-solid">
+          <input type='text' name='loginId' id="loginId" placeholder="Username/Email" className="login-input" required></input>
+        </label>
+        <label htmlFor="password">
+          <input type='password' name='password' id="password" placeholder="Password" className="login-input" required></input>
+        </label>
+        <button type="submit" onClick={handleSubmit} className="login-button width-100">Login</button>
+      </div>
+      <div className="container background-grey">
+        <button className="close-button">Close</button>
+      </div>
     </form>
   </div>
   )

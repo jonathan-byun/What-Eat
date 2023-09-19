@@ -2,35 +2,70 @@
   margin: 0;
 }
 
-label {
-  margin: 10px 0
+button:hover {
+  opacity: .7;
 }
 
 #root {
   height: 100vh;
 }
 
-.background-orange {
-  background-color: rgb(255, 196, 0);
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+.align-center {
+  align-items: center;
+}
+
+.align-stretch {
+  align-items: stretch;
+}
+
+.background-grey {
+  background-color: rgb(231, 231, 231);
+}
+
+.background-brown {
+  background-color: #280004
+}
+
+.border-solid {
+  border-style: solid;
+  border-width: 1px;
+}
+
+.container {
+  padding: 16px;
+}
+
+.close-button {
+  width: auto;
+  padding: 10px 18px;
+  color: white;
+  background-color: red;
+  border: none;
+  cursor: pointer;
 }
 
 .display-flex {
   display: flex;
 }
 
-.form-container {
-  padding: 20px 30px;
-  background-color: white;
+.flex-basis-20 {
+  flex-basis: 20%;
+}
+
+.flex-basis-80 {
+  flex-basis: 80%;
+}
+
+.flex-basis-100 {
+  flex-basis: 100%;
+}
+
+.flex-direction-column {
   flex-direction: column;
-  border-width: 1px;
-  border-color: grey;
-  border-style: solid;
-  max-width: 600px;
-  margin: 20% auto;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .height-100 {
@@ -45,10 +80,57 @@ label {
   justify-content: space-between;
 }
 
-.login-modal {
+.login-button {
+  width: 50%;
+  background-color: rgba(24, 202, 0, 0.788);
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+}
+
+.login-popup-button {
+  width: 10%;
+  color: #A53F2B;
+  background-color: #F0FFCE;
+  border: none;
+  border-radius: 100%;
+}
+
+.login-img {
+  width: 40%;
+}
+
+.login-imgcontainer {
+  text-align: center;
+  margin: 24px 0;
+  position: relative;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.modal {
   position: fixed;
   z-index: 1;
   overflow: auto;
+  background-color: rgba(0, 0, 0, 0.459);
+}
+
+.modal-content {
+  background-color: white;
+  flex-direction: column;
+  border-width: 1px;
+  border-color: grey;
+  border-style: solid;
+  width: 40%;
+  margin: 10% auto;
 }
 
 .Oswald {
@@ -61,11 +143,10 @@ label {
 
 .title {
   font-size: 10vh;
-  color: rgb(255, 0, 0);
+  color: #CCC9A1;
 }
 
 .title-container {
-  justify-content: center;
   text-align: center;
   padding-top: 15%;
 }
