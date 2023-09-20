@@ -91,11 +91,13 @@ button:hover {
 }
 
 .login-popup-button {
-  width: 10%;
   color: #A53F2B;
   background-color: #F0FFCE;
   border: none;
+  padding: 50px 40px;
+  margin: 20px;
   border-radius: 100%;
+  font-size: larger;
 }
 
 .login-img {

@@ -35,6 +35,12 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
+app.get('/api/logInUser/:userName', (req,res)=> {
+  const userName = req.params.userName;
+  const emailPattern =
+  const
+})
+
 /**
  * Serves React's index.html if no api route matches.
  *

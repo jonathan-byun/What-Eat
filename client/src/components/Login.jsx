@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function LoginPopup() {
+export default function LoginPopup({toggleLogin}) {
   const [registering,setRegistering] = useState(false);
 
   function handleSubmit(e) {
@@ -8,8 +8,14 @@ export default function LoginPopup() {
 
   }
 
+  function handleClose(e) {
+    if (e.target.id == 'login-modal') {
+      toggleLogin()
+    }
+  }
+
   return(
-  <div className='modal width-100 height-100'>
+  <div id="login-modal" className='modal width-100 height-100' onClick={handleClose}>
     <form className="modal-content">
       <div className="login-imgcontainer">
         <img src="../public/login-image.png" alt="Login Image" className="login-img"></img>
@@ -24,7 +30,7 @@ export default function LoginPopup() {
         <button type="submit" onClick={handleSubmit} className="login-button width-100">Login</button>
       </div>
       <div className="container background-grey">
-        <button className="close-button">Close</button>
+        <button type="reset" className="close-button" onClick={toggleLogin}>Close</button>
       </div>
     </form>
   </div>
