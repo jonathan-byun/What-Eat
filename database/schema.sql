@@ -11,7 +11,7 @@ CREATE TABLE "public"."user" (
 	"username" VARCHAR(255) NOT NULL UNIQUE,
 	"email" VARCHAR(255) NOT NULL UNIQUE,
 	"password" VARCHAR(255) NOT NULL,
-	"activationToken" VARCHAR(255) NOT NULL UNIQUE,
+	"activationToken" BYTEA NOT NULL UNIQUE,
 	"confirmed?" BOOLEAN NOT NULL,
 	CONSTRAINT "user_pk" PRIMARY KEY ("id")
 );

@@ -4,6 +4,8 @@ import express from 'express';
 import pg from 'pg';
 import { ClientError, errorMiddleware } from './lib/index.js';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 
 const connectionString =
   process.env.DATABASE_URL ||
@@ -21,9 +23,13 @@ const app = express();
 // Create paths for static directories
 const reactStaticDir = new URL('../client/dist', import.meta.url).pathname;
 const uploadsStaticDir = new URL('public', import.meta.url).pathname;
+const saltRounds = 10;
 
 function generateAccessToken(username) {
-  return jwt.sign(username, process.env.TOKEN_SECRET, {expiresIn: '1800s'});
+  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+}
+function hashPassword(password) {
+  return bcrypt.hashSync(password, saltRounds);
 }
 
 app.use(express.static(reactStaticDir));
@@ -35,11 +41,33 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
-app.get('/api/logInUser/:userName', (req,res)=> {
-  const userName = req.params.userName;
-  const emailPattern =
-  const
-})
+app.post('/api/registerUser', (req, res, next) => {
+  let { userName, email, password } = req.body;
+  const hash = hashPassword(password);
+  if (!userName) {
+    userName = email;
+  }
+  const activationToken = crypto.randomBytes(32, (err, buf) => {
+    if (err) {
+      res.status(400).json({ error: 'Activation token error' });
+      return;
+    }
+    return buf.toString('hex');
+  });
+  const sql = `
+    insert into "user" ("username","email","password","activationToken","confirmed")
+    values ($1,$2,$3,$4,false)
+    returning *
+  `;
+  const params = [userName, email, hash, activationToken];
+
+  db.query(sql, params)
+    .then((result) => {
+      const [newUser] = result.rows;
+      res.json(newUser);
+    })
+    .catch((err) => next(err));
+});
 
 /**
  * Serves React's index.html if no api route matches.
