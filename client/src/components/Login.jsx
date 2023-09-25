@@ -3,14 +3,15 @@ import { useState } from 'react';
 export default function LoginPopup({ toggleLogin }) {
   const [registering, setRegistering] = useState(false);
   const [useEmailForUser, setUseEmailForUser] = useState(true);
+  const [useUsername, setUseUsername] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
 
   function handleSubmit(e) {
-    e.preventdefault();
+    e.preventDefault();
     const userData = {
-      userName: userName,
+      userName: useEmailForUser ? email : userName,
       email: email,
       password: password,
     };
@@ -21,7 +22,28 @@ export default function LoginPopup({ toggleLogin }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData),
-      }).then((res) => res.json());
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.error) {
+            alert(data.error);
+          }
+        });
+    } else {
+      if (useUsername) {
+        userData.userName = email;
+      }
+      fetch(`/api/loginUser`, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
     }
   }
 
@@ -44,59 +66,65 @@ export default function LoginPopup({ toggleLogin }) {
             className="login-img"></img>
         </div>
         <div className="container">
-          <label htmlFor="loginId border-solid">
+          <label>
+            {useUsername ? 'Username' : 'Email'}
             <input
-              type="text"
               value={email}
-              name="loginId"
               id="loginId"
-              placeholder="Email"
               className="login-input"
-              onChange={(e) => setEmail(e.value)}
-              required></input>
+              onChange={(e) => setEmail(e.target.value)}></input>
           </label>
-          {registering && (
+          {registering ? (
             <>
               {!useEmailForUser && (
                 <label>
+                  UserName:
                   <input
                     type="text"
                     value={userName}
-                    onChange={(e) => setUserName(e.value)}
+                    onChange={(e) => setUserName(e.target.value)}
                     name="loginId-Username"
                     id="loginId-Username"
-                    placeholder="Username"
                     className="login-input"
                     required></input>
                 </label>
               )}
-
-              <label>
-                <input
-                  type="checkbox"
-                  name="emailForUser"
-                  id="emailForUser"
-                  checked={useEmailForUser}
-                  onChange={() =>
-                    setUseEmailForUser(!useEmailForUser)
-                  }></input>{' '}
-                Use Email for Username?
-              </label>
+              <div className="display-flex justify-right">
+                <label>
+                  <input
+                    type="checkbox"
+                    name="emailForUser"
+                    id="emailForUser"
+                    checked={useEmailForUser}
+                    onChange={() =>
+                      setUseEmailForUser(!useEmailForUser)
+                    }></input>{' '}
+                  Use Email for Username?
+                </label>
+              </div>
             </>
+          ) : (
+            <div className="display-flex justify-right">
+              <button
+                type="button"
+                onClick={() => setUseUsername(!useUsername)}>
+                {useUsername ? 'Use Email' : 'Use Username'}
+              </button>
+            </div>
           )}
-          <label htmlFor="password">
+          <label htmlFor="password" className="display-block">
+            Password:
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.value)}
+              onChange={(e) => setPassword(e.target.value)}
               name="password"
               id="password"
-              placeholder="Password"
               className="login-input"
               required></input>
           </label>
           <button
-            type="submit"
+            type="button"
             onClick={handleSubmit}
             className="login-button width-100">
             {registering ? 'Register' : 'Login'}

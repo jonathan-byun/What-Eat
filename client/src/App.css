@@ -44,6 +44,10 @@ button:hover {
   cursor: pointer;
 }
 
+.display-block {
+  display: block;
+}
+
 .display-flex {
   display: flex;
 }
@@ -72,12 +76,16 @@ button:hover {
   height: 100%;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .justify-center {
   justify-content: center;
 }
 
-.justify-between {
-  justify-content: space-between;
+.justify-right {
+  justify-content: right;
 }
 
 .login-button {

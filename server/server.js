@@ -31,6 +31,20 @@ function generateAccessToken(username) {
 function hashPassword(password) {
   return bcrypt.hashSync(password, saltRounds);
 }
+function generateActivationToken() {
+  let token = crypto.randomBytes(32).toString('hex');
+  const sql = `
+    select "activationToken"
+    from "user"
+    where "activationToken" = $1;
+    `;
+  db.query(sql, [token]).then((results) => {
+    if (results) {
+      token = generateActivationToken();
+    }
+  });
+  return token;
+}
 
 app.use(express.static(reactStaticDir));
 // Static directory for file uploads server/public/
@@ -41,32 +55,57 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
 
-app.post('/api/registerUser', (req, res, next) => {
+app.post('/api/registerUser', async (req, res, next) => {
   let { userName, email, password } = req.body;
   const hash = hashPassword(password);
   if (!userName) {
     userName = email;
   }
-  const activationToken = crypto.randomBytes(32, (err, buf) => {
-    if (err) {
-      res.status(400).json({ error: 'Activation token error' });
-      return;
+  const activationToken = await generateActivationToken();
+
+  const searchUsernameSql = `
+    select
+      "username","email"
+    from "user"
+    where "username" = $1 or "email" = $2;
+  `;
+
+  await db.query(searchUsernameSql, [userName, email]).then((results) => {
+    const matches = results.rows[0];
+    if (matches.email) {
+      res.status(409).json({ error: 'Email already in use' });
     }
-    return buf.toString('hex');
+    if (matches.userName) {
+      res.status(409).json({ error: 'Username already in use' });
+    }
   });
+
   const sql = `
     insert into "user" ("username","email","password","activationToken","confirmed")
     values ($1,$2,$3,$4,false)
     returning *
   `;
+  console.log('hi');
+
   const params = [userName, email, hash, activationToken];
 
   db.query(sql, params)
-    .then((result) => {
-      const [newUser] = result.rows;
-      res.json(newUser);
+    .then((results) => {
+      res.status(200).json('Account created');
     })
     .catch((err) => next(err));
+});
+
+app.get('api/loginUser', async (req, res, next) => {
+  const { userName, email, password } = req.body;
+  const hash = hashPassword(password);
+  const activationToken = await generateActivationToken();
+  const sql = `
+    select *
+    from "user"
+    where $1 = "email" or $1 = "username";
+  `;
+  db.query(sql, [email]);
 });
 
 /**
