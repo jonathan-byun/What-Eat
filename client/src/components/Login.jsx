@@ -10,11 +10,17 @@ export default function LoginPopup({ toggleLogin }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const userData = {
-      userName: useEmailForUser ? email : userName,
-      email: email,
-      password: password,
-    };
+    const userData = registering
+      ? {
+          userName: useEmailForUser ? email : userName,
+          email: email,
+          password: password,
+        }
+      : {
+          loginId: useUsername ? userName : email,
+          password: password,
+          usingUsername: useUsername,
+        };
     if (registering) {
       fetch(`/api/registerUser`, {
         method: 'POST',
@@ -31,10 +37,8 @@ export default function LoginPopup({ toggleLogin }) {
           }
         });
     } else {
-      if (useUsername) {
-        userData.userName = email;
-      }
       fetch(`/api/loginUser`, {
+        method: 'POST',
         headers: {
           'Content-type': 'application/json',
         },
@@ -66,14 +70,26 @@ export default function LoginPopup({ toggleLogin }) {
             className="login-img"></img>
         </div>
         <div className="container">
-          <label>
-            {useUsername ? 'Username' : 'Email'}
-            <input
-              value={email}
-              id="loginId"
-              className="login-input"
-              onChange={(e) => setEmail(e.target.value)}></input>
-          </label>
+          {useUsername ? (
+            <label>
+              Username
+              <input
+                value={userName}
+                id="loginId"
+                className="login-input"
+                onChange={(e) => setUserName(e.target.value)}></input>
+            </label>
+          ) : (
+            <label>
+              Email
+              <input
+                value={email}
+                id="loginId"
+                className="login-input"
+                onChange={(e) => setEmail(e.target.value)}></input>
+            </label>
+          )}
+
           {registering ? (
             <>
               {!useEmailForUser && (

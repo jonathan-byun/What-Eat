@@ -6,6 +6,8 @@ import { ClientError, errorMiddleware } from './lib/index.js';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
+import { Server } from 'socket.io';
+import { createServer } from 'node:http';
 
 const connectionString =
   process.env.DATABASE_URL ||
@@ -19,6 +21,12 @@ const db = new pg.Pool({
 });
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: 'http://localhost:127.0.0.1:5173/page1',
+  },
+});
 
 // Create paths for static directories
 const reactStaticDir = new URL('../client/dist', import.meta.url).pathname;
@@ -28,9 +36,11 @@ const saltRounds = 10;
 function generateAccessToken(username) {
   return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
 }
+
 function hashPassword(password) {
   return bcrypt.hashSync(password, saltRounds);
 }
+
 function generateActivationToken() {
   let token = crypto.randomBytes(32).toString('hex');
   const sql = `
@@ -72,6 +82,9 @@ app.post('/api/registerUser', async (req, res, next) => {
 
   await db.query(searchUsernameSql, [userName, email]).then((results) => {
     const matches = results.rows[0];
+    if (!matches) {
+      return;
+    }
     if (matches.email) {
       res.status(409).json({ error: 'Email already in use' });
     }
@@ -85,7 +98,6 @@ app.post('/api/registerUser', async (req, res, next) => {
     values ($1,$2,$3,$4,false)
     returning *
   `;
-  console.log('hi');
 
   const params = [userName, email, hash, activationToken];
 
@@ -96,16 +108,26 @@ app.post('/api/registerUser', async (req, res, next) => {
     .catch((err) => next(err));
 });
 
-app.get('api/loginUser', async (req, res, next) => {
-  const { userName, email, password } = req.body;
-  const hash = hashPassword(password);
-  const activationToken = await generateActivationToken();
+app.post('/api/loginUser', (req, res, next) => {
+  const { loginId, password, usingUsername } = req.body;
   const sql = `
     select *
     from "user"
-    where $1 = "email" or $1 = "username";
+    where $1 = ${usingUsername ? 'username' : 'email'};
   `;
-  db.query(sql, [email]);
+  db.query(sql, [loginId]).then(async (results) => {
+    const user = results.rows[0];
+    if (!user) {
+      res.status(404).json({ Error: 'User not found' });
+      return;
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      res.json('login success');
+    } else {
+      res.json('wrong password');
+    }
+  });
 });
 
 /**
@@ -121,8 +143,15 @@ app.get('api/loginUser', async (req, res, next) => {
  */
 app.get('*', (req, res) => res.sendFile(`${reactStaticDir}/index.html`));
 
+io.on('connection', (socket) => {
+  console.log('user connected');
+});
+
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
+httpServer.listen(process.env.PORT, () => {
   process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
 });
+// app.listen(process.env.PORT, () => {
+//   process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
+// });
