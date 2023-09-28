@@ -62,7 +62,7 @@ export default function LoginPopup({ toggleLogin }) {
       id="login-modal"
       className="modal width-100 height-100 display-flex justify-center align-center"
       onClick={handleClose}>
-      <form className="modal-content">
+      <form className="modal-content flex-direction-column">
         <div className="login-imgcontainer">
           <img
             src="/login-image.png"

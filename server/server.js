@@ -24,7 +24,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:127.0.0.1:5173/page1',
+    origin: '*',
   },
 });
 
@@ -144,7 +144,7 @@ app.post('/api/loginUser', (req, res, next) => {
 app.get('*', (req, res) => res.sendFile(`${reactStaticDir}/index.html`));
 
 io.on('connection', (socket) => {
-  console.log('user connected');
+  console.log('user connected', socket.id);
 });
 
 app.use(errorMiddleware);
