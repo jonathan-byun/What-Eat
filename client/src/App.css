@@ -31,6 +31,10 @@ button:hover {
   border-width: 1px;
 }
 
+.color-red {
+  color: red;
+}
+
 .container {
   padding: 16px;
 }
@@ -72,8 +76,26 @@ button:hover {
   flex-wrap: wrap;
 }
 
+.font-size-large {
+  font-size: large;
+}
+
+.game-content {
+  height: 50%;
+  background-color: white;
+  margin: 50px;
+}
+
 .height-100 {
   height: 100%;
+}
+
+.join-button {
+  color: wheat;
+  background-color: #a53f2b;
+  margin: 10px 0;
+  padding: 16px 32px;
+  font-size: large;
 }
 
 .justify-between {
@@ -152,6 +174,12 @@ button:hover {
   background-color: #4c230a;
   border: none;
   cursor: pointer;
+}
+
+.room-input-card {
+  padding: 150px 75px;
+  background-color: wheat;
+  border-radius: 70%;
 }
 
 .text-align-center {

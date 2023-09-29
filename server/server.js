@@ -145,6 +145,14 @@ app.get('*', (req, res) => res.sendFile(`${reactStaticDir}/index.html`));
 
 io.on('connection', (socket) => {
   console.log('user connected', socket.id);
+  socket.on('join', (room) => {
+    socket.join(room);
+    console.log(io.engine.clientsCount);
+  });
+});
+
+io.on('user-join', () => {
+  console.log('working');
 });
 
 app.use(errorMiddleware);
