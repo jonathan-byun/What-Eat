@@ -1,6 +1,8 @@
 import { socket } from '../socket';
 import { useEffect, useState } from 'react';
 import JoinForm from '../components/Join-Form';
+import CardSelection from '../components/Card-Select';
+import RestaurantSelection from '../components/Restaurant-Select';
 
 export default function Page1() {
   const [joined, setJoined] = useState(socket.connected);
@@ -35,8 +37,9 @@ export default function Page1() {
   return (
     <>
       {joined ? (
-        <div className="background-brown width-100 height-100 display-flex">
-          <div className="game-content flex-basis-80"></div>
+        <div className="background-brown width-100 height-100 display-flex justify-center">
+          <RestaurantSelection />
+          {/* <CardSelection /> */}
         </div>
       ) : (
         <div className="background-brown width-100 height-100 display-flex justify-center align-center">

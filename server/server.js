@@ -8,6 +8,7 @@ import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import { Server } from 'socket.io';
 import { createServer } from 'node:http';
+import api from 'api'
 
 const connectionString =
   process.env.DATABASE_URL ||
@@ -20,6 +21,8 @@ const db = new pg.Pool({
   },
 });
 
+const sdk = api('@yelp-developers/v1.0#z7c5z2vlkqskzd6');
+sdk.auth('Bearer yfOlF_SGlI7CVaopUsgCgULG3lcbem0dB-916dpxsMfLI9tfiq8Ij97yvxrxHg8Vmb9b6ieibyCnAzVgh5IG0lHSw8YVQujTPavIe8Kq3aVzBOjtCB3c44XpHO4VZXYx')
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -64,6 +67,24 @@ app.use(express.json());
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
 });
+
+app.post('/api/businessesNearby', (req,res,next)=> {
+  let {latitude, longitude, category, sortBy } = req.body;
+  if (!category) {
+    category = 'food';
+  }
+  sdk.v3_business_search({
+  latitude: latitude,
+  longitude: longitude,
+  categories: category,
+  sort_by: sortBy,
+  limit: '20'
+})
+  .then(({data})=> {
+    res.json(data)
+  })
+  .catch((err)=>next(err));
+})
 
 app.post('/api/registerUser', async (req, res, next) => {
   let { userName, email, password } = req.body;
