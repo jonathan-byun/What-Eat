@@ -27,7 +27,7 @@ export default function RestaurantSelection() {
   })
   .then((res)=>res.json())
   .then((data)=>{
-    console.log(data)
+    setYelpCards(data)
   })
   }
 
