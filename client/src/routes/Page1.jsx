@@ -37,12 +37,12 @@ export default function Page1() {
   return (
     <>
       {joined ? (
-        <div className="background-brown width-100 height-100 display-flex justify-center">
+        <div className="background-main width-100 height-100 display-flex justify-center">
           <RestaurantSelection />
           {/* <CardSelection /> */}
         </div>
       ) : (
-        <div className="background-brown width-100 height-100 display-flex justify-center align-center">
+        <div className="background-main width-100 height-100 display-flex justify-center align-center">
           <JoinForm
             room={room}
             handleJoin={handleJoin}

@@ -1,4 +1,6 @@
 import { useState,useEffect } from "react"
+import YelpCard from "./Yelp-Card"
+import YelpDescription from "./Yelp-Card-Description"
 
 export default function RestaurantSelection() {
   const [yelpCards,setYelpCards] = useState([])
@@ -32,17 +34,17 @@ export default function RestaurantSelection() {
   }
 
 
-})
+},[sortBy])
 
 
   return(
     <>
-    <div className="display-flex flex-basis-80">
-      <div className="flex-basis-50">
-
+    <div className="display-flex flex-basis-80 padding-main">
+      <div className="flex-basis-50 background-secondary">
+        <YelpCard />
       </div>
-      <div className="flex-basis-50">
-
+      <div className="flex-basis-50 background-alt">
+        <YelpDescription />
       </div>
     </div>
     </>

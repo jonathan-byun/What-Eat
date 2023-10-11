@@ -6,7 +6,14 @@ button:hover {
   opacity: 0.7;
 }
 
-
+:root {
+  --main-bg-color: #87255B;
+  --secondary-bg-color: #B370B0;
+  --alt-color: #BA5C12;
+  --highlight-color: #F9DC5C;
+  --neutral-color: #C3C3E6;
+  --lowlight-color: #011936;
+}
 
 #root {
   height: 100vh;
@@ -20,12 +27,20 @@ button:hover {
   align-items: stretch;
 }
 
-.background-grey {
-  background-color: rgb(231, 231, 231);
+.background-main {
+  background-color: var(--main-bg-color);
 }
 
-.background-brown {
-  background-color: #280004;
+.background-secondary {
+  background-color: var(--secondary-bg-color);
+}
+
+.background-neutral {
+  background-color: var(--neutral-color);
+}
+
+.background-alt {
+  background-color: var(--alt-color);
 }
 
 .border-solid {
@@ -74,10 +89,6 @@ button:hover {
     height: calc(2 * var(--radius));
 }
 
-.color-red {
-  color: red;
-}
-
 .container {
   padding: 16px;
 }
@@ -85,14 +96,18 @@ button:hover {
 .close-button {
   width: auto;
   padding: 10px 18px;
-  color: white;
-  background-color: red;
+  color: var(--highlight-color);
+  background-color: var(--lowlight-color);
   border: none;
   cursor: pointer;
 }
 
 .display-block {
   display: block;
+}
+
+.display-flex {
+  display: flex;
 }
 
 .flex-basis-20 {
@@ -124,7 +139,7 @@ button:hover {
 }
 
 .game-content {
-  background-color: white;
+  background-color: var(--secondary-bg-color);
   margin: 50px;
   border: solid black 5px;
   padding: 50px
@@ -134,12 +149,17 @@ button:hover {
   height: 100%;
 }
 
+.highlight-color {
+  background-color: var(--highlight-color);
+}
+
 .join-button {
-  color: wheat;
-  background-color: #a53f2b;
+  color: var(--highlight-color);
+  background-color: var(--neutral-color);
   margin: 10px 0;
   padding: 16px 32px;
   font-size: large;
+  border: none;
 }
 
 .justify-between {
@@ -156,8 +176,9 @@ button:hover {
 
 .login-button {
   width: 50%;
-  background-color: rgba(24, 202, 0, 0.788);
-  color: white;
+  background-color: var(--highlight-color);
+  color: var(--lowlight-color);
+  font-size: large;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -165,8 +186,8 @@ button:hover {
 }
 
 .login-popup-button {
-  color: #a53f2b;
-  background-color: #f0ffce;
+  color: var(--lowlight-color);
+  background-color: var(--neutral-color);
   border: none;
   padding: 50px 40px;
   margin: 20px;
@@ -192,6 +213,10 @@ button:hover {
   display: inline-block;
 }
 
+.lowlight-color {
+  background-color: var(--lowlight-color);
+}
+
 .modal {
   position: fixed;
   z-index: 1;
@@ -200,9 +225,9 @@ button:hover {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: var(--secondary-bg-color);
   border-width: 1px;
-  border-color: grey;
+  border-color: var(--lowlight-color);
   border-style: solid;
   width: 40%;
 }
@@ -211,19 +236,23 @@ button:hover {
   font-family: Oswald, sans-serif;
 }
 
+.padding-main {
+  padding: 50px 0;
+}
+
 .register-login-button {
   width: auto;
   padding: 10px 18px;
-  color: white;
-  background-color: #4c230a;
+  color: var(--highlight-color);
+  background-color: var(--lowlight-color);
   border: none;
   cursor: pointer;
 }
 
 .room-input-card {
   padding: 150px 75px;
-  background-color: wheat;
-  border-radius: 70%;
+  background-color: var(--secondary-bg-color);
+  border-radius: 70%
 }
 
 .text-align-center {
@@ -232,7 +261,7 @@ button:hover {
 
 .title {
   font-size: 10vh;
-  color: #ccc9a1;
+  color: var(--highlight-color)
 }
 
 .title-container {
@@ -246,4 +275,17 @@ button:hover {
 
 .width-100 {
   width: 100%;
+}
+
+.yelp-card-container {
+  margin: 10px;
+  padding:15px 20px;
+  background-color: var(--neutral-color);
+}
+
+.yelp-description-container {
+  color: var(--lowlight-color);
+  margin: 10px;
+  padding: 15px 20px;
+  background-color: var(--highlight-color);
 }

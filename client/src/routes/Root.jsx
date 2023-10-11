@@ -11,7 +11,7 @@ export default function Root() {
   }
 
   return(
-    <div className='background-brown width-100 height-100'>
+    <div className='background-main width-100 height-100'>
       {loggingIn && <LoginPopup toggleLogin={toggleLogin} />}
     <div className='title-container'>
       <Link to='page1'>Link to page</Link>
