@@ -37,7 +37,7 @@ export default function Page1() {
   return (
     <>
       {joined ? (
-        <div className="background-main width-100 height-100 display-flex justify-center">
+        <div className="background-main full-page display-flex justify-center">
           <RestaurantSelection />
           {/* <CardSelection /> */}
         </div>
