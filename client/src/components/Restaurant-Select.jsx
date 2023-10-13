@@ -3,9 +3,9 @@ import YelpCard from "./Yelp-Card"
 import YelpDescription from "./Yelp-Card-Description"
 
 export default function RestaurantSelection() {
-  const [yelpCards,setYelpCards] = useState({businesses:[]})
+  const [yelpCards,setYelpCards] = useState()
   const [sortBy, setSortBy] = useState('best_match')
-  const [selectedCard, setSelectedCard] = useState(1)
+  const [selectedCard, setSelectedCard] = useState(0)
 
   useEffect(()=>{
     if (navigator.geolocation) {
@@ -30,34 +30,39 @@ export default function RestaurantSelection() {
   })
   .then((res)=>res.json())
   .then((data)=>{
-    setYelpCards(data)
+    setYelpCards(data.businesses)
   })
   }
 
 
 },[sortBy])
 
-const businesses=yelpCards.businesses
-let yelpCardList = businesses.map((business,index)=> {
+let yelpCardList
+let selectedBusiness
+if (yelpCards) {
+  yelpCardList = yelpCards.map((business,index)=> {
   let selected=false
   if (index === selectedCard) {
     selected=true
   }
   return(
-  <div onClick={()=>setSelectedCard(index)} className={`${selected ? 'selected-card':'background-neutral'} yelp-card-container  Oswald`}>
-    <YelpCard key={business.id} business={business}/>
+  <div key={business.id} onClick={()=>setSelectedCard(index)} className={`${selected ? 'selected-card':'background-neutral'} yelp-card-container  Oswald`}>
+    <YelpCard  business={business}/>
   </div>
   )
 })
+  selectedBusiness = yelpCards[selectedCard]
+}
+
 
   return(
     <>
     <div className="display-flex flex-basis-80 padding-main">
-      <div className="flex-basis-50 background-secondary">
+      <div className="flex-basis-50 background-secondary scrollAuto">
         {yelpCardList}
       </div>
-      <div className="flex-basis-50 background-alt">
-        <YelpDescription />
+      <div className="flex-basis-50 background-alt scrollAuto">
+        {!yelpCards ?<div>loading</div> : <YelpDescription business={selectedBusiness} />}
       </div>
     </div>
     </>

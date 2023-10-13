@@ -14,7 +14,7 @@ export default function YelpCard ({business}) {
       <div className="flex-basis-80 padding-0-10">
         <h3>{name}</h3>
         <div className="display-flex align-center">
-          <img src={stars+'.png'}></img>{rating}
+          <img className="margin-right-10" src={stars+'.png'}></img>{rating}
         </div>
         <h4></h4>
       </div>
