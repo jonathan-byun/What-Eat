@@ -222,6 +222,18 @@ button:hover {
   background-color: var(--lowlight-color);
 }
 
+.map {
+  height:100%;
+  width: 100%;
+}
+
+.map-container {
+  margin: 10px;
+  padding:10px;
+  min-width: 80%;
+  background-color: var(--neutral-color);
+}
+
 .margin-right-10 {
   margin-right: 10px;
 }

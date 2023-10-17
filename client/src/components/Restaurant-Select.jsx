@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react"
 import YelpCard from "./Yelp-Card"
 import YelpDescription from "./Yelp-Card-Description"
+import MapComponent from "./MapComponent"
 
 export default function RestaurantSelection() {
   const [yelpCards,setYelpCards] = useState()
@@ -31,6 +32,7 @@ export default function RestaurantSelection() {
   .then((res)=>res.json())
   .then((data)=>{
     setYelpCards(data.businesses)
+    console.log(data)
   })
   }
 
@@ -54,15 +56,21 @@ if (yelpCards) {
   selectedBusiness = yelpCards[selectedCard]
 }
 
-
   return(
     <>
     <div className="display-flex flex-basis-80 padding-main">
       <div className="flex-basis-50 background-secondary scrollAuto">
         {yelpCardList}
       </div>
-      <div className="flex-basis-50 background-alt scrollAuto">
-        {!yelpCards ?<div>loading</div> : <YelpDescription business={selectedBusiness} />}
+      <div className="flex-basis-50 background-alt scrollAuto display-flex flex-direction-column">
+        <div className="map-container flex-basis-50">
+          {yelpCards ?
+          <>
+          <MapComponent yelpCards={yelpCards} selectedCard={selectedCard}/>
+          <YelpDescription business={selectedBusiness} />
+          </>:
+          <div>loading</div> }
+        </div>
       </div>
     </div>
     </>
