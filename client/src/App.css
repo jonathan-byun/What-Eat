@@ -7,11 +7,11 @@ button:hover {
 }
 
 :root {
-  --main-bg-color: #87255B;
-  --secondary-bg-color: #B370B0;
-  --alt-color: #BA5C12;
-  --highlight-color: #F9DC5C;
-  --neutral-color: #C3C3E6;
+  --main-bg-color: #87255b;
+  --secondary-bg-color: #b370b0;
+  --alt-color: #ba5c12;
+  --highlight-color: #f9dc5c;
+  --neutral-color: #c3c3e6;
   --lowlight-color: #011936;
 }
 
@@ -49,31 +49,45 @@ button:hover {
 }
 
 .card {
-      grid-area: layer;
-      width: 10vmin;
-      height: 10vmin;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: #ffc947;
-      color: #185adb;
-      font-weight: bold;
-      font-size: 3vmin;
+  grid-area: layer;
+  width: 10vmin;
+  height: 10vmin;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #ffc947;
+  color: #185adb;
+  font-weight: bold;
+  font-size: 3vmin;
 
-      /* decimal value based on position in index */
-      --d: calc(var(--i) / var(--total));
+  /* decimal value based on position in index */
+  --d: calc(var(--i) / var(--total));
 
-      /* Add an offset to get placement better */
+  /* Add an offset to get placement better */
 
-      --r-offset: -0.25turn;
-      --r-amount: 1turn;
+  --r-offset: -0.25turn;
+  --r-amount: 1turn;
 
-      /* Calculate rotation based on demical and offset modifiers */
-      --r: calc((var(--r-amount) * var(--d)) + var(--r-offset));
-      --transform: rotate(var(--r)) translate(var(--radius)) rotate(calc(-1 * var(--r)));
+  /* Calculate rotation based on demical and offset modifiers */
+  --r: calc((var(--r-amount) * var(--d)) + var(--r-offset));
+  --transform: rotate(var(--r)) translate(var(--radius))
+    rotate(calc(-1 * var(--r)));
 
-        transform: var(--transform);
-        transition: transform 1.5s ease-in-out;
+  transform: var(--transform);
+  transition: transform 1.5s ease-in-out;
+}
+
+.category-bubble {
+  background-color: aliceblue;
+  flex-basis: 15%;
+  border-radius: 30%;
+  padding: 2px;
+  margin: 0 2px;
+  text-align: center;
+}
+
+.category-container {
+  margin: 10px 0;
 }
 
 .circle-container {
@@ -85,8 +99,8 @@ button:hover {
 
   --radius: 40vmin;
 
-    width: calc(2 * var(--radius));
-    height: calc(2 * var(--radius));
+  width: calc(2 * var(--radius));
+  height: calc(2 * var(--radius));
 }
 
 .container {
@@ -147,7 +161,7 @@ button:hover {
   background-color: var(--secondary-bg-color);
   margin: 50px;
   border: solid black 5px;
-  padding: 50px
+  padding: 50px;
 }
 
 .height-100 {
@@ -223,14 +237,13 @@ button:hover {
 }
 
 .map {
-  height:100%;
+  height: 100%;
   width: 100%;
 }
 
 .map-container {
-  margin: 10px;
-  padding:10px;
-  min-width: 80%;
+  margin: 10px 10px 5px;
+  padding: 10px;
   background-color: var(--neutral-color);
 }
 
@@ -277,7 +290,7 @@ button:hover {
 .room-input-card {
   padding: 150px 75px;
   background-color: var(--secondary-bg-color);
-  border-radius: 70%
+  border-radius: 70%;
 }
 
 .scrollAuto {
@@ -297,7 +310,7 @@ button:hover {
 
 .title {
   font-size: 10vh;
-  color: var(--highlight-color)
+  color: var(--highlight-color);
 }
 
 .title-container {
@@ -322,17 +335,17 @@ button:hover {
 
 .yelp-description-container {
   color: var(--lowlight-color);
-  margin: 10px;
-  padding: 15px 20px;
+  margin: 5px 10px;
+  padding: 15px 10px;
   background-color: var(--highlight-color);
   overflow-y: auto;
-  overflow-x:hidden;
+  overflow-x: hidden;
 }
 
 .yelp-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: fill;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 4px;
 }
 
