@@ -1,4 +1,4 @@
-export default function YelpReview(review) {
+export default function YelpReview({ review }) {
   console.log(review);
   const userPicture = review.user.image_url;
   return (

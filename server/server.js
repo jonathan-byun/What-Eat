@@ -79,6 +79,7 @@ app.get('/api/businessReviews/:businessId', (req, res, next) => {
       business_id_or_alias: req.params.businessId,
     })
     .then(({ data }) => {
+      console.log(data.reviews);
       res.json(data.reviews);
     })
     .catch((err) => next(err));

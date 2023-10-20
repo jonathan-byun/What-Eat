@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import YelpReview from './reviews';
 
 export default function YelpDescription({ business }) {
-  const [reviews, setReviews] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+  const [reviews, setReviews] = useState();
 
   useEffect(() => {
     fetch(`/api/businessReviews/${business.id}`)
@@ -16,10 +15,6 @@ export default function YelpDescription({ business }) {
       });
   }, [business]);
 
-  useEffect(() => {
-    setLoaded(reviews.length > 0);
-  }, [reviews]);
-
   let name = business.name;
   let categories = business.categories;
   let categoriesList = categories.map((category) => {
@@ -30,7 +25,7 @@ export default function YelpDescription({ business }) {
     );
   });
 
-  let reviewsList = loaded
+  let reviewsList = reviews
     ? reviews.map((review) => {
         return <YelpReview key={review.id} review={review} />;
       })
